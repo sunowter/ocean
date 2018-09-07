@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    canvas{
+      display: block;
+      margin: 0 auto;
+    }
+  
+  
+  </style>
+</head>
+<body>
+  <canvas width="1920" height="1000" style="background-color: pink;"></canvas>
+  <script>
+      var cs = document.querySelector('canvas')
+      var ctx = cs.getContext('2d')
+      //需求绘制小鱼在海洋里游
+      // 1、绘制海洋背景
+      // 2、绘制小鱼
+      // 3、让小鱼摆动
+      // 4、让小鱼往前游
+      // 5、游动头之后从头开始游
+      var bg=new Image();
+      bg.onload=function(){
+         ctx.drawImage(bg,0,0,cs.width,cs.height)
+         var fish=new Image();
+         var bigfish=new Image();
+         var index=0
+         var step=0
+         fish.onload=function(){
+          // ctx.drawImage(fish,0,0,174,126,100,100,174,126)
+          //设个定时器让小鱼动起来
+          setInterval(function(){
+            //新生成小鱼时，清除之前的小鱼（清除整个画布，在重新画背景图）
+            ctx.clearRect(0,0,cs.width,cs.height)
+            ctx.drawImage(bg,0,0,cs.width,cs.height)
+            //通过改变小鱼裁剪的y坐标让小鱼动起来
+            ctx.drawImage(fish,0,index*126,174,126,800+step,200,174,126)
+            ctx.drawImage(fish,0,index*126,174,126,750+step,150,174*0.5,126*0.5)
+            ctx.drawImage(fish,0,index*126,174,126,600+step,300,174*0.6,126*0.6)
+            ctx.drawImage(fish,0,index*126,174,126,700+step,350,174*0.8,126*0.8)
+            ctx.drawImage(fish,0,index*126,174,126,700+step,230,174*0.9,126*0.9)
+            ctx.drawImage(fish,0,index*126,174,126,800+step,200,174,126)
+            ctx.drawImage(bigfish,0,index*270,509,270,100+step,100,509,270)
+            index++
+            step+=10
+            console.log(index)
+            if(index>7){
+              index=0
+            }
+            if(step>cs.width){
+             step=-800
+            }
+          },50)
+          //改变在画布中的x坐标让小鱼跑起来
+         }
+         fish.src='./img/fish.png'
+         bigfish.src='./img/shark1.png'
+      }
+      bg.src='./img/bg.jpg'
+  </script>
+  
+</body>
+</html>
